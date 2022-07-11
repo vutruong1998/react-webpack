@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import allReducers from './reducers'
 import Todo from './components/Todo'
 import Timer from './components/Timer'
+import Counter from './components/Counter'
+
+const store = createStore(allReducers)
 
 const App = () => {
     const [value, setValue] = useState('Go swimming')
@@ -16,13 +22,19 @@ const App = () => {
 
     return (
         <div>
-            <h1>React - Webpack</h1>
+            <h1>React - Redux - Webpack</h1>
             <input type="text" placeholder="Input todo" value={value} onChange={handleChange} />
             <Todo todos={todos} addTodo={addTodo} title="My Todos" />
             <br />
             <Timer color="red" />
+            <Counter />
         </div>
     )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+)
